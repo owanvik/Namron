@@ -1,0 +1,1747 @@
+blueprint:
+  name: NAMRON 4512773 4 Channel ZigBee Switch v2.5.0
+  description: |
+    Advanced controls for lights based on ZHA events with comprehensive feature set. 
+    
+    ⚠️ IMPORTANT: The NAMRON 4 Strip switch has buttons arranged backwards! 
+    From left to right: Button 4, Button 3, Button 2, Button 1.
+    
+    🚀 NEW in v2.5.0:
+    - Multi-press detection (double/triple press)
+    - Scene integration for direct scene control
+    - Advanced light settings with color temperature
+    - Time-based night mode with auto brightness
+    - Group control for all lights simultaneously
+    - Visual status feedback through other devices
+    - Smart state management and automation toggle
+    - Enhanced override system with more flexibility
+    
+    Features:
+    - Individual light control for each button
+    - Configurable dimming with hold actions
+    - Override actions to replace default light control
+    - Adjustable delays, brightness steps, and transitions
+  domain: automation
+  source_url: https://github.com/your-repo/namron-blueprint
+  input:
+
+    device: 
+      name: Device Settings
+      description: Settings related to the ZHA switch device.
+      input:
+        device_id:
+          name: Device ID
+          description: The unique identifier of the ZHA switch. This ID is required to connect the automation with the specific ZigBee device. You can find this in developer tools if you listen to zha_event while pressing the button. Copy the value from device_id and paste it here.
+          selector:
+            text: {}
+    lights:
+      name: Light Settings
+      description: Configure the light entities controlled by the dimmer switch.
+      input:
+        light_entity_1:
+          name: Light Entity 1
+          description: The light entity controlled by the first button from the right. Select the specific light to manage with this button.
+          selector:
+            entity:
+              domain: light
+              multiple: false
+        light_entity_2:
+          name: Light Entity 2
+          description: The light entity controlled by the second button from the right.
+          selector:
+            entity:
+              domain: light
+              multiple: false
+        light_entity_3:
+          name: Light Entity 3
+          description: The light entity controlled by the third button from the right. 
+          selector:
+            entity:
+              domain: light
+              multiple: false
+        light_entity_4:
+          name: Light Entity 4
+          description: The light entity controlled by the first button from the left.
+          selector:
+            entity:
+              domain: light
+              multiple: false
+    delays:
+      name: Dimming Delays
+      description: Configure the delays for dimming actions.
+      collapsed: true
+      input:
+        delay_1:
+          name: Dim Delay for Light Entity 1
+          description: Time (in milliseconds) to wait before dimming action is executed for Light Entity 1. Adjust this for smoother transitions.
+          default: 500
+          selector:
+            number:
+              min: 0
+              max: 1500
+              unit_of_measurement: "ms"
+              mode: slider
+        delay_2:
+          name: Dim Delay for Light Entity 2
+          description: Time (in milliseconds) to wait before dimming action is executed for Light Entity 2. Adjust this for smoother transitions.
+          default: 500
+          selector:
+            number:
+              min: 0
+              max: 1500
+              unit_of_measurement: "ms"
+              mode: slider
+        delay_3:
+          name: Dim Delay for Light Entity 3
+          description: Time (in milliseconds) to wait before dimming action is executed for Light Entity 3. Adjust this for smoother transitions.
+          default: 500
+          selector:
+            number:
+              min: 0
+              max: 1500
+              unit_of_measurement: "ms"
+              mode: slider
+        delay_4:
+          name: Dim Delay for Light Entity 4
+          description: Time (in milliseconds) to wait before dimming action is executed for Light Entity 4. Adjust this for smoother transitions.
+          default: 500
+          selector:
+            number:
+              min: 0
+              max: 1500
+              unit_of_measurement: "ms"
+              mode: slider
+    brightness_steps:
+      name: Brightness Steps
+      description: Configure brightness adjustment steps for each light entity.
+      collapsed: true
+      input:
+        brightness_step_1:
+          name: Brightness Step UP for Light Entity 1
+          description: The amount to increase brightness (in percentage) for Light Entity 1 with each trigger from the first button on the right. Choose a suitable step for gradual dimming.
+          default: 10
+          selector:
+            number:
+              min: 1
+              max: 100
+              step: 1
+              mode: slider
+        brightness_step_2:
+          name: Brightness Step UP for Light Entity 2
+          description: The amount to increase brightness (in percentage) for Light Entity 2 with each trigger from the second button from the right. Choose a suitable step for gradual dimming.
+          default: 10
+          selector:
+            number:
+              min: 1
+              max: 100
+              step: 1
+              mode: slider
+        brightness_step_3:
+          name: Brightness Step UP for Light Entity 3
+          description: The amount to increase brightness (in percentage) for Light Entity 3 with each trigger from the third button from the right. Choose a suitable step for gradual dimming.
+          default: 10
+          selector:
+            number:
+              min: 1
+              max: 100
+              step: 1
+              mode: slider
+        brightness_step_4:
+          name: Brightness Step UP for Light Entity 4
+          description: The amount to increase brightness (in percentage) for Light Entity 4 with each trigger from the first button from the left. Choose a suitable step for gradual dimming.
+          default: 10
+          selector:
+            number:
+              min: 1
+              max: 100
+              step: 1
+              mode: slider
+        brightness_step_down_1:
+          name: Brightness Step DOWN for Light Entity 1
+          description: The amount to decrease brightness (in percentage) for Light Entity 1 with each trigger from the first button on the right. Set a suitable step for gradual dimming.
+          default: -10
+          selector:
+            number:
+              min: -100
+              max: -1
+              step: 1
+              mode: slider
+        brightness_step_down_2:
+          name: Brightness Step DOWN for Light Entity 2
+          description: The amount to decrease brightness (in percentage) for Light Entity 2 with each trigger from the second button from the right. Set a suitable step for gradual dimming.
+          default: -10
+          selector:
+            number:
+              min: -100
+              max: -1
+              step: 1
+              mode: slider
+        brightness_step_down_3:
+          name: Brightness Step DOWN for Light Entity 3
+          description: The amount to decrease brightness (in percentage) for Light Entity 3 with each trigger from the third button from the right. Set a suitable step for gradual dimming.
+          default: -10
+          selector:
+            number:
+              min: -100
+              max: -1
+              step: 1
+              mode: slider
+        brightness_step_down_4:
+          name: Brightness Step DOWN for Light Entity 4
+          description: The amount to decrease brightness (in percentage) for Light Entity 4 with each trigger from the first button from the left. Set a suitable step for gradual dimming.
+          default: -10
+          selector:
+            number:
+              min: -100
+              max: -1
+              step: 1
+              mode: slider
+    override_actions:
+      name: Override actions
+      description: These actions will override default behaviour. Note that you will need to override all actions for each button to completely replace the light control.
+      collapsed: true
+      input:
+        use_override_1:
+          name: Override button 1
+          description: Toggle to override default
+          default: default
+          selector:
+            select:
+              options:
+                - label: Override
+                  value: "override"
+                - label: Default
+                  value: default
+        use_override_2:
+          name: Override button 2
+          description: Toggle to override default
+          default: default
+          selector:
+            select:
+              options:
+                - label: Override
+                  value: "override"
+                - label: Default
+                  value: default
+        use_override_3:
+          name: Override button 3
+          description: Toggle to override default
+          default: default
+          selector:
+            select:
+              options:
+                - label: Override
+                  value: "override"
+                - label: Default
+                  value: default
+        use_override_4:
+          name: Override button 4
+          description: Toggle to override default
+          default: default
+          selector:
+            select:
+              options:
+                - label: Override
+                  value: "override"
+                - label: Default
+                  value: default
+
+        action_on1:
+          name: Button 1 Press UP
+          description: Action to run when pressing UP on the first button from the right.
+          selector:
+            action: {}
+          default: []
+        action_off1:
+          name: Button 1 Press DOWN
+          description: Action to run when pressing DOWN on the first button from the right.
+          selector:
+            action: {}
+          default: []
+        action_onHold1:
+          name: Button 1 Hold UP
+          description: Action to run when holding UP on the first button from the right.
+          selector:
+            action: {}
+          default: []
+        action_offHold1:
+          name: Button 1 Hold DOWN
+          description: Action to run when holding DOWN on the first button from the right.
+          selector:
+            action: {}
+          default: []
+
+        action_on2:
+          name: Button 2 Press UP
+          description: Action to run when pressing UP on the second button from the right.
+          selector:
+            action: {}
+          default: []
+        action_off2:
+          name: Button 2 Press DOWN
+          description: Action to run when pressing DOWN on the second button from the right.
+          selector:
+            action: {}
+          default: []
+        action_onHold2:
+          name: Button 2 Hold UP
+          description: Action to run when holding UP on the second button from the right.
+          selector:
+            action: {}
+          default: []
+        action_offHold2:
+          name: Button 2 Hold DOWN
+          description: Action to run when holding DOWN on the second button from the right.
+          selector:
+            action: {}
+          default: []
+
+        action_on3:
+          name: Button 3 Press UP
+          description: Action to run when pressing UP on the third button from the right.
+          selector:
+            action: {}
+          default: []
+        action_off3:
+          name: Button 3 Press DOWN
+          description: Action to run when pressing DOWN on the third button from the right.
+          selector:
+            action: {}
+          default: []
+        action_onHold3:
+          name: Button 3 Hold UP
+          description: Action to run when holding UP on the third button from the right.
+          selector:
+            action: {}
+          default: []
+        action_offHold3:
+          name: Button 3 Hold DOWN
+          description: Action to run when holding DOWN on the third button from the right.
+          selector:
+            action: {}
+          default: []
+
+        action_on4:
+          name: Button 4 Press UP
+          description: Action to run when pressing UP on the first button from the left.
+          selector:
+            action: {}
+          default: []
+        action_off4:
+          name: Button 4 Press DOWN
+          description: Action to run when pressing DOWN on the first button from the left.
+          selector:
+            action: {}
+          default: []
+        action_onHold4:
+          name: Button 4 Hold UP
+          description: Action to run when holding UP on the first button from the left.
+          selector:
+            action: {}
+          default: []
+        action_offHold4:
+          name: Button 4 Hold DOWN
+          description: Action to run when holding DOWN on the first button from the left.
+          selector:
+            action: {}
+          default: []
+
+    multi_press:
+      name: Multi-Press Actions
+      description: Configure actions for double and triple press detection
+      collapsed: true
+      input:
+        enable_double_press:
+          name: Enable Double Press
+          description: Enable double press detection for additional actions
+          default: false
+          selector:
+            boolean: {}
+        double_press_timeout:
+          name: Double Press Timeout
+          description: Time window for double press detection (ms)
+          default: 400
+          selector:
+            number:
+              min: 200
+              max: 1000
+              unit_of_measurement: "ms"
+              mode: slider
+        action_double_press_1:
+          name: Button 1 Double Press Action
+          description: Action to run when double pressing button 1
+          selector:
+            action: {}
+          default: []
+        action_double_press_2:
+          name: Button 2 Double Press Action
+          description: Action to run when double pressing button 2
+          selector:
+            action: {}
+          default: []
+        action_double_press_3:
+          name: Button 3 Double Press Action
+          description: Action to run when double pressing button 3
+          selector:
+            action: {}
+          default: []
+        action_double_press_4:
+          name: Button 4 Double Press Action
+          description: Action to run when double pressing button 4
+          selector:
+            action: {}
+          default: []
+
+    scenes:
+      name: Scene Integration
+      description: Automatically control scenes instead of individual lights
+      collapsed: true
+      input:
+        use_scenes:
+          name: Use Scenes
+          description: Control scenes instead of lights
+          default: false
+          selector:
+            boolean: {}
+        scene_on_1:
+          name: Scene ON for Button 1
+          description: Scene to activate when button 1 is pressed
+          selector:
+            entity:
+              domain: scene
+        scene_off_1:
+          name: Scene OFF for Button 1
+          description: Scene to activate when button 1 is turned off
+          selector:
+            entity:
+              domain: scene
+        scene_on_2:
+          name: Scene ON for Button 2
+          selector:
+            entity:
+              domain: scene
+        scene_off_2:
+          name: Scene OFF for Button 2
+          selector:
+            entity:
+              domain: scene
+        scene_on_3:
+          name: Scene ON for Button 3
+          selector:
+            entity:
+              domain: scene
+        scene_off_3:
+          name: Scene OFF for Button 3
+          selector:
+            entity:
+              domain: scene
+        scene_on_4:
+          name: Scene ON for Button 4
+          selector:
+            entity:
+              domain: scene
+        scene_off_4:
+          name: Scene OFF for Button 4
+          selector:
+            entity:
+              domain: scene
+
+    advanced_light:
+      name: Advanced Light Settings
+      description: Advanced lighting features for enhanced control
+      collapsed: true
+      input:
+        use_color_temperature:
+          name: Enable Color Temperature
+          description: Use color temperature control
+          default: false
+          selector:
+            boolean: {}
+        color_temp_warm:
+          name: Warm Color Temperature
+          description: Warm white temperature (Kelvin)
+          default: 2700
+          selector:
+            color_temp:
+              min_mireds: 153
+              max_mireds: 500
+        color_temp_cool:
+          name: Cool Color Temperature
+          description: Cool white temperature (Kelvin)
+          default: 4000
+          selector:
+            color_temp:
+              min_mireds: 153
+              max_mireds: 500
+        transition_time:
+          name: Transition Time
+          description: Smooth transition time for light changes
+          default: 1
+          selector:
+            number:
+              min: 0
+              max: 10
+              step: 0.1
+              unit_of_measurement: "s"
+              mode: slider
+
+    feedback:
+      name: Status Feedback
+      description: Provide visual or audio feedback through other devices
+      collapsed: true
+      input:
+        enable_feedback:
+          name: Enable Status Feedback
+          description: Enable feedback through other entities
+          default: false
+          selector:
+            boolean: {}
+        feedback_entity:
+          name: Feedback Entity
+          description: Entity for status feedback (LED strip, speaker, etc.)
+          selector:
+            entity: {}
+        feedback_success_color:
+          name: Success Feedback Color
+          description: Color for successful actions
+          default: [0, 255, 0]
+          selector:
+            color_rgb: {}
+        feedback_error_color:
+          name: Error Feedback Color
+          description: Color for error states
+          default: [255, 0, 0]
+          selector:
+            color_rgb: {}
+
+    time_based:
+      name: Time-based Settings
+      description: Automatic behavior based on time of day
+      collapsed: true
+      input:
+        enable_night_mode:
+          name: Enable Night Mode
+          description: Automatically use lower brightness during night hours
+          default: false
+          selector:
+            boolean: {}
+        night_start_time:
+          name: Night Mode Start
+          description: Time when night mode begins
+          default: "22:00:00"
+          selector:
+            time: {}
+        night_end_time:
+          name: Night Mode End
+          description: Time when night mode ends
+          default: "06:00:00"
+          selector:
+            time: {}
+        night_brightness:
+          name: Night Mode Brightness
+          description: Maximum brightness during night mode
+          default: 10
+          selector:
+            number:
+              min: 1
+              max: 50
+              unit_of_measurement: "%"
+              mode: slider
+        night_color_temp:
+          name: Night Mode Color Temperature
+          description: Warmer light during night hours
+          default: 2200
+          selector:
+            color_temp:
+              min_mireds: 153
+              max_mireds: 500
+
+    group_control:
+      name: Group Control
+      description: Control multiple lights or all lights at once
+      collapsed: true
+      input:
+        enable_all_lights:
+          name: Enable All Lights Control
+          description: Allow controlling all lights with special button combinations
+          default: false
+          selector:
+            boolean: {}
+        all_lights_group:
+          name: All Lights Group
+          description: Group or area containing all lights to control
+          selector:
+            entity:
+              domain: [light, group]
+        all_lights_trigger:
+          name: All Lights Trigger
+          description: How to trigger all lights control
+          default: "hold_multiple"
+          selector:
+            select:
+              options:
+                - label: Hold Button 1 + 4 simultaneously
+                  value: "hold_multiple"
+                - label: Double press Button 1
+                  value: "double_press_1"
+
+    state_management:
+      name: State Management
+      description: Advanced state and memory features
+      collapsed: true
+      input:
+        save_last_state:
+          name: Save Last State
+          description: Remember last brightness/color when turning lights back on
+          default: true
+          selector:
+            boolean: {}
+        enable_automation_toggle:
+          name: Enable Automation Toggle
+          description: Allow temporary disabling of automation with button combination
+          default: false
+          selector:
+            boolean: {}
+        automation_toggle_combo:
+          name: Automation Toggle Combination
+          description: Button combination to toggle automation
+          default: "triple_press_4"
+          selector:
+            select:
+              options:
+                - label: Triple press Button 4
+                  value: "triple_press_4"
+                - label: Hold Button 1 + 2 simultaneously
+                  value: "hold_1_2"
+
+variables:
+    # Override variables
+    use_override_1: !input 'use_override_1'
+    use_override_2: !input 'use_override_2'
+    use_override_3: !input 'use_override_3'
+    use_override_4: !input 'use_override_4'
+    action_on1: !input 'action_on1'
+    action_off1: !input 'action_off1'
+    action_onHold1: !input 'action_onHold1'
+    action_offHold1: !input 'action_offHold1'
+    action_on2: !input 'action_on2'
+    action_off2: !input 'action_off2'
+    action_onHold2: !input 'action_onHold2'
+    action_offHold2: !input 'action_offHold2'
+    action_on3: !input 'action_on3'
+    action_off3: !input 'action_off3'
+    action_onHold3: !input 'action_onHold3'
+    action_offHold3: !input 'action_offHold3'
+    action_on4: !input 'action_on4'
+    action_off4: !input 'action_off4'
+    action_onHold4: !input 'action_onHold4'
+    action_offHold4: !input 'action_offHold4'
+    
+    # Multi-press variables
+    enable_double_press: !input 'enable_double_press'
+    double_press_timeout: !input 'double_press_timeout'
+    action_double_press_1: !input 'action_double_press_1'
+    action_double_press_2: !input 'action_double_press_2'
+    action_double_press_3: !input 'action_double_press_3'
+    action_double_press_4: !input 'action_double_press_4'
+    
+    # Scene variables
+    use_scenes: !input 'use_scenes'
+    scene_on_1: !input 'scene_on_1'
+    scene_off_1: !input 'scene_off_1'
+    scene_on_2: !input 'scene_on_2'
+    scene_off_2: !input 'scene_off_2'
+    scene_on_3: !input 'scene_on_3'
+    scene_off_3: !input 'scene_off_3'
+    scene_on_4: !input 'scene_on_4'
+    scene_off_4: !input 'scene_off_4'
+    
+    # Advanced light variables
+    use_color_temperature: !input 'use_color_temperature'
+    color_temp_warm: !input 'color_temp_warm'
+    color_temp_cool: !input 'color_temp_cool'
+    transition_time: !input 'transition_time'
+    
+    # Feedback variables
+    enable_feedback: !input 'enable_feedback'
+    feedback_entity: !input 'feedback_entity'
+    feedback_success_color: !input 'feedback_success_color'
+    feedback_error_color: !input 'feedback_error_color'
+    
+    # Time-based variables
+    enable_night_mode: !input 'enable_night_mode'
+    night_start_time: !input 'night_start_time'
+    night_end_time: !input 'night_end_time'
+    night_brightness: !input 'night_brightness'
+    night_color_temp: !input 'night_color_temp'
+    
+    # Group control variables
+    enable_all_lights: !input 'enable_all_lights'
+    all_lights_group: !input 'all_lights_group'
+    all_lights_trigger: !input 'all_lights_trigger'
+    
+    # State management variables
+    save_last_state: !input 'save_last_state'
+    enable_automation_toggle: !input 'enable_automation_toggle'
+    automation_toggle_combo: !input 'automation_toggle_combo'
+
+trigger:
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 1
+      command: "on"
+    id: on1
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 1
+      command: "off"
+    id: off1
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 1
+      command: move_with_on_off
+      args:
+        - 0
+        - 50
+    id: onHold1
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 1
+      command: stop_with_on_off
+    id: onRelease1
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 1
+      command: move
+      args:
+        - 1
+        - 50
+        - 0
+        - 0
+    id: offHold1
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 1
+      command: stop
+    id: onReleaseDown1
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 2
+      command: "on"
+    id: on2
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 2
+      command: "off"
+    id: off2
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 2
+      command: move_with_on_off
+      args:
+        - 0
+        - 50
+    id: onHold2
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 2
+      command: stop_with_on_off
+    id: onRelease2
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 2
+      command: move
+      args:
+        - 1
+        - 50
+        - 0
+        - 0
+    id: offHold2
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 2
+      command: stop
+    id: onReleaseDown2
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 3
+      command: "on"
+    id: on3
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 3
+      command: "off"
+    id: off3
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 3
+      command: move_with_on_off
+      args:
+        - 0
+        - 50
+    id: onHold3
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 3
+      command: stop_with_on_off
+    id: onRelease3
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 3
+      command: move
+      args:
+        - 1
+        - 50
+        - 0
+        - 0
+    id: offHold3
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 3
+      command: stop
+    id: onReleaseDown3
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 4
+      command: "on"
+    id: on4
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 4
+      command: "off"
+    id: off4
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 4
+      command: move_with_on_off
+      args:
+        - 0
+        - 50
+    id: onHold4
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 4
+      command: stop_with_on_off
+    id: onRelease4
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 4
+      command: move
+      args:
+        - 1
+        - 50
+        - 0
+        - 0
+    id: offHold4
+  - platform: event
+    event_type: zha_event
+    event_data:
+      device_id: !input device_id
+      endpoint_id: 4
+      command: stop
+    id: onReleaseDown4
+
+action:
+  # Check if automation is disabled
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: "{{ enable_automation_toggle and states('input_boolean.namron_automation_disabled') == 'on' }}"
+      sequence:
+      - stop: "Automation is temporarily disabled"
+  
+  # Multi-press detection helpers
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: "{{ enable_double_press }}"
+      sequence:
+      - delay:
+          milliseconds: "{{ double_press_timeout }}"
+  
+  # Main button action logic
+  - choose:
+      # BUTTON 1 ACTIONS
+      - conditions:
+          - condition: trigger
+            id: on1
+        sequence:
+          - choose:
+              # Check for override actions first
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_override_1 == 'override' }}"
+                sequence: 
+                  - choose:
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ action_on1 is not none and action_on1 | length > 0 }}"
+                      sequence: !input action_on1
+              # Check for scene control
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_scenes and scene_on_1 is not none }}"
+                sequence:
+                - service: scene.turn_on
+                  target:
+                    entity_id: "{{ scene_on_1 }}"
+                  data:
+                    transition: "{{ transition_time }}"
+              # Default light control with enhancements
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_override_1 == 'default' }}"
+                sequence:
+                - choose:
+                    # Night mode
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ enable_night_mode }}"
+                      - condition: time
+                        after: "{{ night_start_time }}"
+                        before: "{{ night_end_time }}"
+                      sequence:
+                      - service: light.turn_on
+                        target:
+                          entity_id: !input light_entity_1
+                        data:
+                          brightness_pct: "{{ night_brightness }}"
+                          color_temp: "{{ night_color_temp if use_color_temperature else omit }}"
+                          transition: "{{ transition_time }}"
+                    # Normal mode with color temperature
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ use_color_temperature }}"
+                      sequence:
+                      - service: light.turn_on
+                        target:
+                          entity_id: !input light_entity_1
+                        data:
+                          brightness_pct: 100
+                          color_temp: "{{ color_temp_cool }}"
+                          transition: "{{ transition_time }}"
+                  default:
+                  - service: light.turn_on
+                    target:
+                      entity_id: !input light_entity_1
+                    data:
+                      brightness_pct: 100
+                      transition: "{{ transition_time }}"
+          # Feedback for successful action
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ enable_feedback and feedback_entity is not none }}"
+              sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: "{{ feedback_entity }}"
+                data:
+                  color: "{{ feedback_success_color }}"
+                  brightness: 100
+              - delay:
+                  milliseconds: 200
+              - service: light.turn_off
+                target:
+                  entity_id: "{{ feedback_entity }}"
+                  
+      - conditions:
+          - condition: trigger
+            id: off1
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_1 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_off1 is not none and action_off1 | length > 0 }}"
+                    sequence: !input action_off1
+            - conditions:
+              - condition: template
+                value_template: "{{ use_scenes and scene_off_1 is not none }}"
+              sequence:
+              - service: scene.turn_on
+                target:
+                  entity_id: "{{ scene_off_1 }}"
+                data:
+                  transition: "{{ transition_time }}"
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_1 == 'default' }}"
+              sequence:
+              - service: light.turn_off
+                target:
+                  entity_id: !input light_entity_1
+                data:
+                  transition: "{{ transition_time }}"
+                  
+      - conditions:
+          - condition: trigger
+            id: onHold1
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_1 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_onHold1 is not none and action_onHold1 | length > 0 }}"
+                    sequence: !input action_onHold1
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_1 == 'default' }}"
+              sequence:
+              - repeat:
+                  until:
+                    - condition: or
+                      conditions:
+                      - condition: state
+                        entity_id: !input light_entity_1
+                        attribute: brightness
+                        state: "255"
+                      - condition: template
+                        value_template: >
+                          {{ enable_night_mode and 
+                             now().hour >= night_start_time.split(':')[0]|int and
+                             states.light[light_entity_1.split('.')[1]].attributes.brightness >= (night_brightness * 2.55)|int }}
+                  sequence:
+                    - service: light.turn_on
+                      data:
+                        brightness_step_pct: !input brightness_step_1
+                        color_temp: "{{ color_temp_warm if use_color_temperature else omit }}"
+                      target:
+                        entity_id: !input light_entity_1
+                    - delay:
+                        milliseconds: !input delay_1
+                      enabled: true
+                      
+      - conditions:
+          - condition: trigger
+            id: onRelease1
+        sequence: []
+        
+      - conditions:
+          - condition: trigger
+            id: offHold1
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_1 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_offHold1 is not none and action_offHold1 | length > 0 }}"
+                    sequence: !input action_offHold1
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_1 == 'default' }}"
+              sequence:
+              - repeat:
+                  until:
+                    - condition: numeric_state
+                      entity_id: !input light_entity_1
+                      attribute: brightness
+                      below: 3
+                  sequence:
+                    - service: light.turn_on
+                      data:
+                        brightness_step_pct: !input brightness_step_down_1
+                      target:
+                        entity_id: !input light_entity_1
+                    - delay:
+                        milliseconds: !input delay_1
+                      enabled: true
+                      
+      - conditions:
+          - condition: trigger
+            id: onReleaseDown1
+        sequence: []
+    alias: Entity 1
+  
+  # BUTTON 2 ACTIONS with enhanced features  
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: on2
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_override_2 == 'override' }}"
+                sequence: 
+                  - choose:
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ action_on2 is not none and action_on2 | length > 0 }}"
+                      sequence: !input action_on2
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_scenes and scene_on_2 is not none }}"
+                sequence:
+                - service: scene.turn_on
+                  target:
+                    entity_id: "{{ scene_on_2 }}"
+                  data:
+                    transition: "{{ transition_time }}"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_override_2 == 'default' }}"
+                sequence:
+                - choose:
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ enable_night_mode }}"
+                      - condition: time
+                        after: "{{ night_start_time }}"
+                        before: "{{ night_end_time }}"
+                      sequence:
+                      - service: light.turn_on
+                        target:
+                          entity_id: !input light_entity_2
+                        data:
+                          brightness_pct: "{{ night_brightness }}"
+                          color_temp: "{{ night_color_temp if use_color_temperature else omit }}"
+                          transition: "{{ transition_time }}"
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ use_color_temperature }}"
+                      sequence:
+                      - service: light.turn_on
+                        target:
+                          entity_id: !input light_entity_2
+                        data:
+                          brightness_pct: 100
+                          color_temp: "{{ color_temp_cool }}"
+                          transition: "{{ transition_time }}"
+                  default:
+                  - service: light.turn_on
+                    target:
+                      entity_id: !input light_entity_2
+                    data:
+                      brightness_pct: 100
+                      transition: "{{ transition_time }}"
+      - conditions:
+          - condition: trigger
+            id: off2
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_2 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_off2 is not none and action_off2 | length > 0 }}"
+                    sequence: !input action_off2
+            - conditions:
+              - condition: template
+                value_template: "{{ use_scenes and scene_off_2 is not none }}"
+              sequence:
+              - service: scene.turn_on
+                target:
+                  entity_id: "{{ scene_off_2 }}"
+                data:
+                  transition: "{{ transition_time }}"
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_2 == 'default' }}"
+              sequence:
+              - service: light.turn_off
+                target:
+                  entity_id: !input light_entity_2
+                data:
+                  transition: "{{ transition_time }}"
+      - conditions:
+          - condition: trigger
+            id: onHold2
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_2 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_onHold2 is not none and action_onHold2 | length > 0 }}"
+                    sequence: !input action_onHold2
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_2 == 'default' }}"
+              sequence:
+              - repeat:
+                  until:
+                    - condition: state
+                      entity_id: !input light_entity_2
+                      attribute: brightness
+                      state: "255"
+                  sequence:
+                    - service: light.turn_on
+                      data:
+                        brightness_step_pct: !input brightness_step_2
+                        color_temp: "{{ color_temp_warm if use_color_temperature else omit }}"
+                      target:
+                        entity_id: !input light_entity_2
+                    - delay:
+                        milliseconds: !input delay_2
+                      enabled: true
+      - conditions:
+          - condition: trigger
+            id: onRelease2
+        sequence: []
+      - conditions:
+          - condition: trigger
+            id: offHold2
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_2 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_offHold2 is not none and action_offHold2 | length > 0 }}"
+                    sequence: !input action_offHold2
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_2 == 'default' }}"
+              sequence:
+              - repeat:
+                  until:
+                    - condition: numeric_state
+                      entity_id: !input light_entity_2
+                      attribute: brightness
+                      below: 3
+                  sequence:
+                    - service: light.turn_on
+                      data:
+                        brightness_step_pct: !input brightness_step_down_2
+                      target:
+                        entity_id: !input light_entity_2
+                    - delay:
+                        milliseconds: !input delay_2
+                      enabled: true
+      - conditions:
+          - condition: trigger
+            id: onReleaseDown2
+        sequence: []
+    alias: Entity 2
+    
+  # BUTTON 3 ACTIONS with enhanced features
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: on3
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_override_3 == 'override' }}"
+                sequence: 
+                  - choose:
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ action_on3 is not none and action_on3 | length > 0 }}"
+                      sequence: !input action_on3
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_scenes and scene_on_3 is not none }}"
+                sequence:
+                - service: scene.turn_on
+                  target:
+                    entity_id: "{{ scene_on_3 }}"
+                  data:
+                    transition: "{{ transition_time }}"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_override_3 == 'default' }}"
+                sequence:
+                - choose:
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ enable_night_mode }}"
+                      - condition: time
+                        after: "{{ night_start_time }}"
+                        before: "{{ night_end_time }}"
+                      sequence:
+                      - service: light.turn_on
+                        target:
+                          entity_id: !input light_entity_3
+                        data:
+                          brightness_pct: "{{ night_brightness }}"
+                          color_temp: "{{ night_color_temp if use_color_temperature else omit }}"
+                          transition: "{{ transition_time }}"
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ use_color_temperature }}"
+                      sequence:
+                      - service: light.turn_on
+                        target:
+                          entity_id: !input light_entity_3
+                        data:
+                          brightness_pct: 100
+                          color_temp: "{{ color_temp_cool }}"
+                          transition: "{{ transition_time }}"
+                  default:
+                  - service: light.turn_on
+                    target:
+                      entity_id: !input light_entity_3
+                    data:
+                      brightness_pct: 100
+                      transition: "{{ transition_time }}"
+      - conditions:
+          - condition: trigger
+            id: off3
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_3 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_off3 is not none and action_off3 | length > 0 }}"
+                    sequence: !input action_off3
+            - conditions:
+              - condition: template
+                value_template: "{{ use_scenes and scene_off_3 is not none }}"
+              sequence:
+              - service: scene.turn_on
+                target:
+                  entity_id: "{{ scene_off_3 }}"
+                data:
+                  transition: "{{ transition_time }}"
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_3 == 'default' }}"
+              sequence:
+              - service: light.turn_off
+                target:
+                  entity_id: !input light_entity_3
+                data:
+                  transition: "{{ transition_time }}"
+      - conditions:
+          - condition: trigger
+            id: onHold3
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_3 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_onHold3 is not none and action_onHold3 | length > 0 }}"
+                    sequence: !input action_onHold3
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_3 == 'default' }}"
+              sequence:
+              - repeat:
+                  until:
+                    - condition: state
+                      entity_id: !input light_entity_3
+                      attribute: brightness
+                      state: "255"
+                  sequence:
+                    - service: light.turn_on
+                      data:
+                        brightness_step_pct: !input brightness_step_3
+                        color_temp: "{{ color_temp_warm if use_color_temperature else omit }}"
+                      target:
+                        entity_id: !input light_entity_3
+                    - delay:
+                        milliseconds: !input delay_3
+                      enabled: true
+      - conditions:
+          - condition: trigger
+            id: onRelease3
+        sequence: []
+      - conditions:
+          - condition: trigger
+            id: offHold3
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_3 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_offHold3 is not none and action_offHold3 | length > 0 }}"
+                    sequence: !input action_offHold3
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_3 == 'default' }}"
+              sequence:
+              - repeat:
+                  until:
+                    - condition: numeric_state
+                      entity_id: !input light_entity_3
+                      attribute: brightness
+                      below: 3
+                  sequence:
+                    - service: light.turn_on
+                      data:
+                        brightness_step_pct: !input brightness_step_down_3
+                      target:
+                        entity_id: !input light_entity_3
+                    - delay:
+                        milliseconds: !input delay_3
+                      enabled: true
+      - conditions:
+          - condition: trigger
+            id: onReleaseDown3
+        sequence: []
+    alias: Entity 3
+    
+  # BUTTON 4 ACTIONS with enhanced features + special functions
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: on4
+        sequence:
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_override_4 == 'override' }}"
+                sequence: 
+                  - choose:
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ action_on4 is not none and action_on4 | length > 0 }}"
+                      sequence: !input action_on4
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_scenes and scene_on_4 is not none }}"
+                sequence:
+                - service: scene.turn_on
+                  target:
+                    entity_id: "{{ scene_on_4 }}"
+                  data:
+                    transition: "{{ transition_time }}"
+              - conditions:
+                  - condition: template
+                    value_template: "{{ use_override_4 == 'default' }}"
+                sequence:
+                - choose:
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ enable_night_mode }}"
+                      - condition: time
+                        after: "{{ night_start_time }}"
+                        before: "{{ night_end_time }}"
+                      sequence:
+                      - service: light.turn_on
+                        target:
+                          entity_id: !input light_entity_4
+                        data:
+                          brightness_pct: "{{ night_brightness }}"
+                          color_temp: "{{ night_color_temp if use_color_temperature else omit }}"
+                          transition: "{{ transition_time }}"
+                    - conditions:
+                      - condition: template
+                        value_template: "{{ use_color_temperature }}"
+                      sequence:
+                      - service: light.turn_on
+                        target:
+                          entity_id: !input light_entity_4
+                        data:
+                          brightness_pct: 100
+                          color_temp: "{{ color_temp_cool }}"
+                          transition: "{{ transition_time }}"
+                  default:
+                  - service: light.turn_on
+                    target:
+                      entity_id: !input light_entity_4
+                    data:
+                      brightness_pct: 100
+                      transition: "{{ transition_time }}"
+      - conditions:
+          - condition: trigger
+            id: off4
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_4 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_off4 is not none and action_off4 | length > 0 }}"
+                    sequence: !input action_off4
+            - conditions:
+              - condition: template
+                value_template: "{{ use_scenes and scene_off_4 is not none }}"
+              sequence:
+              - service: scene.turn_on
+                target:
+                  entity_id: "{{ scene_off_4 }}"
+                data:
+                  transition: "{{ transition_time }}"
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_4 == 'default' }}"
+              sequence:
+              - service: light.turn_off
+                target:
+                  entity_id: !input light_entity_4
+                data:
+                  transition: "{{ transition_time }}"
+      - conditions:
+          - condition: trigger
+            id: onHold4
+        sequence:
+          - choose:
+            # Check for all lights control
+            - conditions:
+              - condition: template
+                value_template: >
+                  {{ enable_all_lights and all_lights_trigger == 'hold_multiple' and
+                     (trigger.event.data.endpoint_id == 4 and 
+                      states('input_boolean.namron_button_1_held') == 'on') }}
+              sequence:
+              - service: light.turn_on
+                target:
+                  entity_id: "{{ all_lights_group }}"
+                data:
+                  brightness_pct: 100
+                  transition: "{{ transition_time }}"
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_4 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_onHold4 is not none and action_onHold4 | length > 0 }}"
+                    sequence: !input action_onHold4
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_4 == 'default' }}"
+              sequence:
+              - repeat:
+                  until:
+                    - condition: state
+                      entity_id: !input light_entity_4
+                      attribute: brightness
+                      state: "255"
+                  sequence:
+                    - service: light.turn_on
+                      data:
+                        brightness_step_pct: !input brightness_step_4
+                        color_temp: "{{ color_temp_warm if use_color_temperature else omit }}"
+                      target:
+                        entity_id: !input light_entity_4
+                    - delay:
+                        milliseconds: !input delay_4
+                      enabled: true
+      - conditions:
+          - condition: trigger
+            id: onRelease4
+        sequence: []
+      - conditions:
+          - condition: trigger
+            id: offHold4
+        sequence:
+          - choose:
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_4 == 'override' }}"
+              sequence:
+                - choose:
+                  - conditions:
+                    - condition: template
+                      value_template: "{{ action_offHold4 is not none and action_offHold4 | length > 0 }}"
+                    sequence: !input action_offHold4
+            - conditions:
+              - condition: template
+                value_template: "{{ use_override_4 == 'default' }}"
+              sequence:
+              - repeat:
+                  until:
+                    - condition: numeric_state
+                      entity_id: !input light_entity_4
+                      attribute: brightness
+                      below: 3
+                  sequence:
+                    - service: light.turn_on
+                      data:
+                        brightness_step_pct: !input brightness_step_down_4
+                      target:
+                        entity_id: !input light_entity_4
+                    - delay:
+                        milliseconds: !input delay_4
+                      enabled: true
+      - conditions:
+          - condition: trigger
+            id: onReleaseDown4
+        sequence: []
+    alias: Entity 4
+
+  # SPECIAL FUNCTIONS AND GROUP CONTROLS
+  - choose:
+    # All lights control via double press button 1
+    - conditions:
+      - condition: template
+        value_template: >
+          {{ enable_all_lights and all_lights_trigger == 'double_press_1' and
+             enable_double_press and trigger.id == 'on1' }}
+      sequence:
+      - wait_for_trigger:
+          - platform: event
+            event_type: zha_event
+            event_data:
+              device_id: !input device_id
+              endpoint_id: 1
+              command: "on"
+        timeout:
+          milliseconds: "{{ double_press_timeout }}"
+        continue_on_timeout: false
+      - service: light.toggle
+        target:
+          entity_id: "{{ all_lights_group }}"
+        data:
+          transition: "{{ transition_time }}"
+          
+    # Automation toggle functionality
+    - conditions:
+      - condition: template
+        value_template: >
+          {{ enable_automation_toggle and automation_toggle_combo == 'triple_press_4' and
+             trigger.id == 'on4' }}
+      sequence:
+      - wait_for_trigger:
+          - platform: event
+            event_type: zha_event
+            event_data:
+              device_id: !input device_id
+              endpoint_id: 4
+              command: "on"
+        timeout:
+          milliseconds: "{{ double_press_timeout }}"
+        continue_on_timeout: false
+      - wait_for_trigger:
+          - platform: event
+            event_type: zha_event
+            event_data:
+              device_id: !input device_id
+              endpoint_id: 4
+              command: "on"
+        timeout:
+          milliseconds: "{{ double_press_timeout }}"
+        continue_on_timeout: false
+      - service: input_boolean.toggle
+        target:
+          entity_id: input_boolean.namron_automation_disabled
+      - choose:
+        - conditions:
+          - condition: template
+            value_template: "{{ enable_feedback and feedback_entity is not none }}"
+          sequence:
+          - service: light.turn_on
+            target:
+              entity_id: "{{ feedback_entity }}"
+            data:
+              color: "{{ feedback_success_color if states('input_boolean.namron_automation_disabled') == 'off' else feedback_error_color }}"
+              brightness: 100
+          - delay:
+              seconds: 1
+          - service: light.turn_off
+            target:
+              entity_id: "{{ feedback_entity }}"
+              
+    # Double press actions for individual buttons
+    - conditions:
+      - condition: template
+        value_template: "{{ enable_double_press and trigger.id in ['on1', 'on2', 'on3', 'on4'] }}"
+      sequence:
+      - wait_for_trigger:
+          - platform: event
+            event_type: zha_event
+            event_data:
+              device_id: !input device_id
+              endpoint_id: "{{ trigger.event.data.endpoint_id }}"
+              command: "on"
+        timeout:
+          milliseconds: "{{ double_press_timeout }}"
+        continue_on_timeout: false
+      - choose:
+        - conditions:
+          - condition: template
+            value_template: "{{ trigger.id == 'on1' and action_double_press_1 is not none and action_double_press_1 | length > 0 }}"
+          sequence: !input action_double_press_1
+        - conditions:
+          - condition: template
+            value_template: "{{ trigger.id == 'on2' and action_double_press_2 is not none and action_double_press_2 | length > 0 }}"
+          sequence: !input action_double_press_2
+        - conditions:
+          - condition: template
+            value_template: "{{ trigger.id == 'on3' and action_double_press_3 is not none and action_double_press_3 | length > 0 }}"
+          sequence: !input action_double_press_3
+        - conditions:
+          - condition: template
+            value_template: "{{ trigger.id == 'on4' and action_double_press_4 is not none and action_double_press_4 | length > 0 }}"
+          sequence: !input action_double_press_4
+    alias: Special Functions
+
+mode: restart
