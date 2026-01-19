@@ -6,6 +6,8 @@
 
 Dette er en omfattende og avansert Home Assistant blueprint for NAMRON 4-kanals ZigBee dimmerbryter. Blueprint'en gir full kontroll over lysenheter med mange avanserte funksjoner som gjør den til en av de mest kraftfulle switch-automatiseringene tilgjengelig.
 
+[Imgur](https://imgur.com/UvvY9Ok)
+
 ### 🚀 Hovedfunksjoner
 
 - **4 uavhengige kanaler**: Hver knapp kan kontrollere sin egen lysenhet
