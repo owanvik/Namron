@@ -1,12 +1,12 @@
 blueprint:
-  name: NAMRON 4512773 4 Channel ZigBee Switch v2.5.0
+  name: NAMRON 4512773 4 Channel ZigBee Switch v2.5.1
   description: |
     Advanced controls for lights based on ZHA events with comprehensive feature set. 
     
     ⚠️ IMPORTANT: The NAMRON 4 Strip switch has buttons arranged backwards! 
     From left to right: Button 4, Button 3, Button 2, Button 1.
     
-    🚀 NEW in v2.5.0:
+    🚀 NEW in v2.5.1:
     - Multi-press detection (double/triple press)
     - Scene integration for direct scene control
     - Advanced light settings with color temperature
