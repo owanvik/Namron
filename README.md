@@ -1,4 +1,4 @@
-# NAMRON 4-Channel ZigBee Switch Blueprint for Home Assistant v2.5.1
+# NAMRON 4-Channel ZigBee Switch Blueprint for Home Assistant v2.5.2
 
 ## Oversikt
 
@@ -71,7 +71,7 @@ For avanserte funksjoner som automation toggle, opprett disse helper entities:
 
 1. Gå til **Settings** → **Automations & Scenes** → **Automations**
 2. Klikk **Create Automation** → **Use Blueprint**
-3. Velg "NAMRON 4 Channel ZigBee Switch v2.5.1"
+3. Velg "NAMRON 4 Channel ZigBee Switch v2.5.2"
 4. Konfigurer innstillingene (se konfigurasjon under)
 
 ## Konfiguration
@@ -309,6 +309,11 @@ I override-modus kan du definere helt egne handlinger for hver knapp og operasjo
 | **06:00-22:00** | Normal lysstyrke + kald farge |
 
 ## Versjonsoversikt
+
+### v2.5.2
+- ✅ Gjorde `feedback_entity` valgfri (`default: null`).
+- ✅ Gjorde `all_lights_group` valgfri (`default: null`).
+- 🛠️ Fikser feilen: `Message malformed: Missing input all_lights_group, feedback_entity`.
 
 ### v2.5.1
 - ✅ Gjorde scene-felter valgfrie (`default: null`), slik at bare `device_id` er påkrevd.
