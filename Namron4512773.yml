@@ -1,12 +1,12 @@
 blueprint:
-  name: NAMRON 4512773 4 Channel ZigBee Switch v2.5.3
+  name: NAMRON 4512773 4 Channel ZigBee Switch v2.5.4
   description: |
     Advanced controls for lights based on ZHA events with comprehensive feature set. 
     
     ⚠️ IMPORTANT: The NAMRON 4 Strip switch has buttons arranged backwards! 
     From left to right: Button 4, Button 3, Button 2, Button 1.
     
-    🚀 NEW in v2.5.3:
+    🚀 NEW in v2.5.4:
     - Multi-press detection (double/triple press)
     - Scene integration for direct scene control
     - Advanced light settings with color temperature
@@ -958,9 +958,12 @@ action:
                     - conditions:
                       - condition: template
                         value_template: "{{ enable_night_mode }}"
-                      - condition: time
-                        after: "{{ night_start_time }}"
-                        before: "{{ night_end_time }}"
+                      - condition: template
+                        value_template: >-
+                          {% set start = today_at(night_start_time) %}
+                          {% set end = today_at(night_end_time) %}
+                          {% set n = now() %}
+                          {{ (start <= end and start <= n <= end) or (start > end and (n >= start or n <= end)) }}
                       sequence:
                       - service: light.turn_on
                         target:
@@ -1159,9 +1162,12 @@ action:
                     - conditions:
                       - condition: template
                         value_template: "{{ enable_night_mode }}"
-                      - condition: time
-                        after: "{{ night_start_time }}"
-                        before: "{{ night_end_time }}"
+                      - condition: template
+                        value_template: >-
+                          {% set start = today_at(night_start_time) %}
+                          {% set end = today_at(night_end_time) %}
+                          {% set n = now() %}
+                          {{ (start <= end and start <= n <= end) or (start > end and (n >= start or n <= end)) }}
                       sequence:
                       - service: light.turn_on
                         target:
@@ -1330,9 +1336,12 @@ action:
                     - conditions:
                       - condition: template
                         value_template: "{{ enable_night_mode }}"
-                      - condition: time
-                        after: "{{ night_start_time }}"
-                        before: "{{ night_end_time }}"
+                      - condition: template
+                        value_template: >-
+                          {% set start = today_at(night_start_time) %}
+                          {% set end = today_at(night_end_time) %}
+                          {% set n = now() %}
+                          {{ (start <= end and start <= n <= end) or (start > end and (n >= start or n <= end)) }}
                       sequence:
                       - service: light.turn_on
                         target:
@@ -1501,9 +1510,12 @@ action:
                     - conditions:
                       - condition: template
                         value_template: "{{ enable_night_mode }}"
-                      - condition: time
-                        after: "{{ night_start_time }}"
-                        before: "{{ night_end_time }}"
+                      - condition: template
+                        value_template: >-
+                          {% set start = today_at(night_start_time) %}
+                          {% set end = today_at(night_end_time) %}
+                          {% set n = now() %}
+                          {{ (start <= end and start <= n <= end) or (start > end and (n >= start or n <= end)) }}
                       sequence:
                       - service: light.turn_on
                         target:
