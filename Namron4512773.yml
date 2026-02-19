@@ -1,12 +1,12 @@
 blueprint:
-  name: NAMRON 4512773 4 Channel ZigBee Switch v2.5.4
+  name: NAMRON 4512773 4 Channel ZigBee Switch v2.5.5
   description: |
     Advanced controls for lights based on ZHA events with comprehensive feature set. 
     
     ⚠️ IMPORTANT: The NAMRON 4 Strip switch has buttons arranged backwards! 
     From left to right: Button 4, Button 3, Button 2, Button 1.
     
-    🚀 NEW in v2.5.4:
+    🚀 NEW in v2.5.5:
     - Multi-press detection (double/triple press)
     - Scene integration for direct scene control
     - Advanced light settings with color temperature
@@ -1747,11 +1747,31 @@ action:
             event_type: zha_event
             event_data:
               device_id: !input device_id
-              endpoint_id: "{{ trigger.event.data.endpoint_id }}"
+              endpoint_id: 1
+              command: "on"
+          - platform: event
+            event_type: zha_event
+            event_data:
+              device_id: !input device_id
+              endpoint_id: 2
+              command: "on"
+          - platform: event
+            event_type: zha_event
+            event_data:
+              device_id: !input device_id
+              endpoint_id: 3
+              command: "on"
+          - platform: event
+            event_type: zha_event
+            event_data:
+              device_id: !input device_id
+              endpoint_id: 4
               command: "on"
         timeout:
           milliseconds: "{{ double_press_timeout }}"
         continue_on_timeout: false
+      - condition: template
+        value_template: "{{ wait.trigger is not none and wait.trigger.event.data.endpoint_id == trigger.event.data.endpoint_id }}"
       - choose:
         - conditions:
           - condition: template

@@ -1,4 +1,4 @@
-# NAMRON 4-Channel ZigBee Switch Blueprint for Home Assistant v2.5.4
+# NAMRON 4-Channel ZigBee Switch Blueprint for Home Assistant v2.5.5
 
 ## Oversikt
 
@@ -71,7 +71,7 @@ For avanserte funksjoner som automation toggle, opprett disse helper entities:
 
 1. Gå til **Settings** → **Automations & Scenes** → **Automations**
 2. Klikk **Create Automation** → **Use Blueprint**
-3. Velg "NAMRON 4 Channel ZigBee Switch v2.5.4"
+3. Velg "NAMRON 4 Channel ZigBee Switch v2.5.5"
 4. Konfigurer innstillingene (se konfigurasjon under)
 
 ## Konfiguration
@@ -309,6 +309,10 @@ I override-modus kan du definere helt egne handlinger for hver knapp og operasjo
 | **06:00-22:00** | Normal lysstyrke + kald farge |
 
 ## Versjonsoversikt
+
+### v2.5.5
+- 🛠️ Fikset double-press valideringsfelle: fjernet template i `wait_for_trigger.event_data.endpoint_id`.
+- ✅ Bruker nå statiske endpoint-triggere (1–4) + template-sjekk etterpå for matching.
 
 ### v2.5.4
 - 🛠️ Fikset nattmodus-feil i HA validering: fjernet templating i `condition: time` (`after/before`) og erstattet med robust template-condition.
