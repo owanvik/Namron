@@ -406,42 +406,50 @@ blueprint:
         scene_on_1:
           name: Scene ON for Button 1
           description: Scene to activate when button 1 is pressed
+          default: null
           selector:
             entity:
               domain: scene
         scene_off_1:
           name: Scene OFF for Button 1
           description: Scene to activate when button 1 is turned off
+          default: null
           selector:
             entity:
               domain: scene
         scene_on_2:
           name: Scene ON for Button 2
+          default: null
           selector:
             entity:
               domain: scene
         scene_off_2:
           name: Scene OFF for Button 2
+          default: null
           selector:
             entity:
               domain: scene
         scene_on_3:
           name: Scene ON for Button 3
+          default: null
           selector:
             entity:
               domain: scene
         scene_off_3:
           name: Scene OFF for Button 3
+          default: null
           selector:
             entity:
               domain: scene
         scene_on_4:
           name: Scene ON for Button 4
+          default: null
           selector:
             entity:
               domain: scene
         scene_off_4:
           name: Scene OFF for Button 4
+          default: null
           selector:
             entity:
               domain: scene
