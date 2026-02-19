@@ -1,12 +1,12 @@
 blueprint:
-  name: NAMRON 4512773 4 Channel ZigBee Switch v2.5.2
+  name: NAMRON 4512773 4 Channel ZigBee Switch v2.5.3
   description: |
     Advanced controls for lights based on ZHA events with comprehensive feature set. 
     
     ⚠️ IMPORTANT: The NAMRON 4 Strip switch has buttons arranged backwards! 
     From left to right: Button 4, Button 3, Button 2, Button 1.
     
-    🚀 NEW in v2.5.2:
+    🚀 NEW in v2.5.3:
     - Multi-press detection (double/triple press)
     - Scene integration for direct scene control
     - Advanced light settings with color temperature
@@ -31,7 +31,8 @@ blueprint:
       input:
         device_id:
           name: Device ID
-          description: The unique identifier of the ZHA switch. This ID is required to connect the automation with the specific ZigBee device. You can find this in developer tools if you listen to zha_event while pressing the button. Copy the value from device_id and paste it here.
+          description: The unique identifier of the ZHA switch. You can find this in developer tools if you listen to zha_event while pressing the button. Copy the value from device_id and paste it here.
+          default: null
           selector:
             text: {}
     lights:
@@ -41,6 +42,7 @@ blueprint:
         light_entity_1:
           name: Light Entity 1
           description: The light entity controlled by the first button from the right. Select the specific light to manage with this button.
+          default: null
           selector:
             entity:
               domain: light
@@ -48,6 +50,7 @@ blueprint:
         light_entity_2:
           name: Light Entity 2
           description: The light entity controlled by the second button from the right.
+          default: null
           selector:
             entity:
               domain: light
@@ -55,6 +58,7 @@ blueprint:
         light_entity_3:
           name: Light Entity 3
           description: The light entity controlled by the third button from the right. 
+          default: null
           selector:
             entity:
               domain: light
@@ -62,6 +66,7 @@ blueprint:
         light_entity_4:
           name: Light Entity 4
           description: The light entity controlled by the first button from the left.
+          default: null
           selector:
             entity:
               domain: light
